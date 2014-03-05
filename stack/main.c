@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define PRT_STACK(stk) \
-	{	\
-		int i;	\
-		for (i = 0; i < stk->topnum; i++) { \
-			printf("%d ", *(stk->arr + i));	\
-		}	\
-		printf("\n"); \
-	}	\
+#include <print.h>
 
 #define FLUSH_STDIN \
 	{	\
@@ -24,7 +17,9 @@ typedef struct _stack {
 
 void resize_stack(stack *stk, int size)
 {
-
+	stk->size	= size;
+	stk->arr	= malloc(sizeof(int) * stk->size);
+	
 }
 
 void push_stack(stack *stk, int num)
@@ -71,16 +66,16 @@ int main()
 			FLUSH_STDIN;
 			push_stack(stk, num);
 
-			PRT_STACK(stk);
+			PRINT_ARR(stk->arr, stk->topnum);
 		} else if (op == 't') {
 			num	= top_stack(stk);
 			printf("top stack num is %d\n", num);
 			
-			PRT_STACK(stk);
+			PRTINT_ARR(stk->arr, stk->topnum);
 		} else {
 			printf("exit program.\n");
 			
-			PRT_STACK(stk);
+			PRTINT_ARR(stk->arr, stk->topnum);
 			break;
 		}
 	}
