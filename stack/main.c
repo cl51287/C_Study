@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <print.h>
-
-#define FLUSH_STDIN \
-	{	\
-		char c;	\
-		while ((c = getchar()) != '\n' && c != EOF);	\
-	};	\
-
+#include <string.h>
+#include "../inout.h"
 //printf("%d ", *(stk->arr + i));	
 typedef struct _stack {
 	int *arr;
@@ -17,13 +11,18 @@ typedef struct _stack {
 
 void resize_stack(stack *stk, int size)
 {
+	int *p_arr;
+	p_arr	= malloc(sizeof(int) * size);
+	memcpy(p_arr, stk->arr, sizeof(int) * stk->size);
 	stk->size	= size;
-	stk->arr	= malloc(sizeof(int) * stk->size);
-	
+	stk->arr	= p_arr;
 }
 
 void push_stack(stack *stk, int num)
 {
+	if (stk->topnum == stk->size) {
+		resize_stack(stk, stk->size * 2);
+	}
 	*(stk->arr + stk->topnum)	= num;
 	stk->topnum++;
 }
@@ -33,6 +32,9 @@ int top_stack(stack *stk)
 	int num;
 	if (stk->topnum == 0) {
 		return 0;
+	}
+	if (stk->topnum <= stk->size / 4) {
+		resize_stack(stk, stk->size / 2);
 	}
 	num	= *(stk->arr + stk->topnum - 1);
 	stk->topnum--;
@@ -67,15 +69,17 @@ int main()
 			push_stack(stk, num);
 
 			PRINT_ARR(stk->arr, stk->topnum);
+			printf("stk size is %d, topnum is %d\n", stk->size, stk->topnum);
 		} else if (op == 't') {
 			num	= top_stack(stk);
 			printf("top stack num is %d\n", num);
 			
-			PRTINT_ARR(stk->arr, stk->topnum);
+			PRINT_ARR(stk->arr, stk->topnum);
+			printf("stk size is %d, topnum is %d\n", stk->size, stk->topnum);
 		} else {
 			printf("exit program.\n");
 			
-			PRTINT_ARR(stk->arr, stk->topnum);
+			PRINT_ARR(stk->arr, stk->topnum);
 			break;
 		}
 	}
