@@ -122,12 +122,12 @@ int main()
 	char op;
 	Tree *tree;
 
-	tree	= malloc(sizeof (Tree *));
+//	tree	= malloc(sizeof (Tree *));
 
-	add_tree(tree, 60);
+//	add_tree(tree, 60);
 
 	TreeNode *cur, *new1, *new2;
-	cur	= tree->head_node;
+//	cur	= tree->head_node;
 	new1	= (TreeNode *) malloc(sizeof(TreeNode *));
 	new1->num	= 70;
 	new2	= (TreeNode *) malloc(sizeof(TreeNode *));
@@ -136,8 +136,8 @@ int main()
 //	cur->left_node	= new2;
 //	add_tree(tree, 70);
 //	add_tree(tree, 50);
-	print_tree(tree);
-
+//	print_tree(tree);
+printf("new1 is %x, new2 is %x\n", new1, new2);
 	free(new1);
 	free(new2);
 //	free(tree->head_node->left_node);
@@ -148,7 +148,7 @@ int main()
 
 	new1	= (TreeNode *) malloc(sizeof(TreeNode *));
 	if (new1->left_node) {
-		printf("qqq--");
+		printf("new1 left is %x\n", new1->left_node);
 	}
 //	add_tree(tree, 70);
 //	print_tree(tree);

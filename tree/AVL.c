@@ -147,7 +147,7 @@ void _delete(TreeNode *tree_node, int num, int lorr)
 			_delete(tree_node->right, num, RIGHT_NODE);
 		} else {
 		}
-	} else if (num < tree_node) {
+	} else if (num < tree_node->num) {
 		if (tree_node->left) {
 			_delete(tree_node->left, num, LEFT_NODE);
 		}

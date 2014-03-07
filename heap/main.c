@@ -32,30 +32,30 @@ void init_heap(Heap *h)
 {
 	h->size	= 8;
 	h->arr	= (int *) malloc(sizeof(int) * h->size);
-	h->len	= 1;
+	h->len	= 0;
 }
 
 void add_heap(Heap *h, int num)
 {
 	int cur;
+	int p;
 
-	cur	= h->len;	
-	if (cur > 0) {
-		while (1) {
-			if (cur == 0) {
-				break;
-			}
-
-			if (num > *(h->arr + HEAP_PARENT_NUM(cur))) {
-				*(h->arr + cur)	= *(h->arr + HEAP_PARENT_NUM(cur));
-				cur	= HEAP_PARENT_NUM(cur);
-			} else {
-				break;
-			}
+	cur	= h->len;
+	do {
+		if (cur == 0) {
+			break;
 		}
-	} else {
-		*(h->arr + cur)	= num;
-	}
+
+		p	= HEAP_PARENT_NUM(cur);
+		if (num > *(h->arr + p)) {
+			*(h->arr + cur)	= *(h->arr + p);
+			cur	= p;
+		} else {
+			break;
+		}
+	} while (1);
+	
+	*(h->arr + cur)	= num;
 	h->len++;
 }
 
@@ -64,20 +64,29 @@ int find_max_heap(Heap *h)
 	return *(h->arr);
 }
 
-void delete_heap(Heap *h, int num)
+void delete_max_heap(Heap *h)
 {
-	int cur;
+	int cur	= 0, max;
 	
-	cur		= 0;
-	while (1) {
-		if (num > *(h->arr + cur)) {
-			break;
-		} else if (num == *(h->arr + cur)) {
-			
+	do {
+		if (*(h->arr + HEAP_RIGHT_NUM(cur)) > *(h->arr + HEAP_LEFT_NUM(cur))) {
+			*(h->arr + cur)	= *(h->arr + HEAP_RIGHT_NUM(cur));
+			if (HEAP_RIGHT_NUM(cur) >= h->len) {
+				break;
+			}
+			cur	= HEAP_RIGHT_NUM(cur);
 		} else {
-			
+			*(h->arr + cur)	= *(h->arr + HEAP_LEFT_NUM(cur));
+			if (HEAP_LEFT_NUM(cur) >= h->len) {
+				break;
+			}
+			cur	= HEAP_LEFT_NUM(cur);
 		}
-	}	
+	} while (1);
+
+	*(h->arr + cur)		= *(h->arr + h->len - 1);
+	*(h->arr + h->len - 1)	= 0;
+	h->len--;
 }
 
 int main()
@@ -103,12 +112,9 @@ int main()
 
 			PRT_HEAP(h);
 		} else if (op == 'd') {
-			printf("please input will delete num:\n");
-			scanf("%d", &num);
-			FLUSH_STDIN;
-			delete_heap(h, num);
+			delete_max_heap(h);
 			
-//			PRT_HEAP(h);
+			PRT_HEAP(h);
 		} else if (op == 'f') {
 			printf("the max is %d\n", find_max_heap(h));
 		} else {
