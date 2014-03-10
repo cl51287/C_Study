@@ -122,36 +122,9 @@ int main()
 	char op;
 	Tree *tree;
 
-//	tree	= malloc(sizeof (Tree *));
+	tree	= malloc(sizeof (Tree *));
 
-//	add_tree(tree, 60);
 
-	TreeNode *cur, *new1, *new2;
-//	cur	= tree->head_node;
-	new1	= (TreeNode *) malloc(sizeof(TreeNode *));
-	new1->num	= 70;
-	new2	= (TreeNode *) malloc(sizeof(TreeNode *));
-	new2->num	= 50;
-//	cur->right_node	= new1;
-//	cur->left_node	= new2;
-//	add_tree(tree, 70);
-//	add_tree(tree, 50);
-//	print_tree(tree);
-printf("new1 is %x, new2 is %x\n", new1, new2);
-	free(new1);
-	free(new2);
-//	free(tree->head_node->left_node);
-//	free(tree->head_node->right_node);
-//	delete_tree(tree, 70);
-//	delete_tree(tree, 50);
-//	print_tree(tree);
-
-	new1	= (TreeNode *) malloc(sizeof(TreeNode *));
-	if (new1->left_node) {
-		printf("new1 left is %x\n", new1->left_node);
-	}
-//	add_tree(tree, 70);
-//	print_tree(tree);
 
 	while (1) {	
 		printf("please input action:\n");
